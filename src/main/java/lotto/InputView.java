@@ -22,6 +22,6 @@ public class InputView {
             throw new IllegalArgumentException("[ERROR] 구입 금액은 1000원 단위에 맞춰 구매 가능합니다");
         }
 
-        return money;
+        return money / MIN_ORDER_UNIT;
     }
 }
