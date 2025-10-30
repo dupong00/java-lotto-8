@@ -12,6 +12,7 @@ public class Application {
         OutputView outputView = new OutputView();
 
         int count;
+        int bonusNumber;
 
         //메인 흐름
         outputView.printMoneyQuestion();
@@ -22,15 +23,11 @@ public class Application {
         List<Lotto> lottos = lottoGenerator.generateLottos(count);
 
         outputView.printLottos(lottos);
-    }
-
-    int bonusNumber;
 
         outputView.printWinningLottoQuestion();
-    String winningLottos = inputView.read();
-
-    String[] winningLotto = winningLottos.trim().split(",");
+        List<Integer> winningLottos = validator.validateWinningLottoToParse(inputView.read());
 
         outputView.printBonusNumberQuestion();
-    bonusNumber = inputView.read();
+        bonusNumber = validator.validateBonusNumber(inputView.read());
+    }
 }
