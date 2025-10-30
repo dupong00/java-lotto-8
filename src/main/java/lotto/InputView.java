@@ -5,7 +5,7 @@ import camp.nextstep.edu.missionutils.Console;
 public class InputView {
     private static final int MIN_ORDER_UNIT = 1000;
 
-    public static int readBuyLotto(){
+    public int readBuyLotto(){
         String input = Console.readLine();
         int money;
         try{

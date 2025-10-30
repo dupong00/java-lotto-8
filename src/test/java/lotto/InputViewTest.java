@@ -35,10 +35,12 @@ public class InputViewTest {
     @DisplayName("구매 금액에 숫자가 아닌 값을 입력한 경우")
     public void readBuyLotto_NotNumber()
     {
+        InputView inputView = new InputView();
+
         String input = "오천원";
         setFakeInput(input);
 
-        assertThatThrownBy(InputView::readBuyLotto)
+        assertThatThrownBy(inputView::readBuyLotto)
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -46,10 +48,12 @@ public class InputViewTest {
     @DisplayName("구매 금액이 최소 금액보다 작은 경우")
     public void readBuyLotto_LessMinMoney()
     {
+        InputView inputView = new InputView();
+
         String input = "120";
         setFakeInput(input);
 
-        assertThatThrownBy(InputView::readBuyLotto)
+        assertThatThrownBy(inputView::readBuyLotto)
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -57,10 +61,12 @@ public class InputViewTest {
     @DisplayName("구매 금액이 1000원 단위에 맞지 않는 경우")
     public void readBuyLotto_NotMatchUnit()
     {
+        InputView inputView = new InputView();
+
         String input = "1200";
         setFakeInput(input);
 
-        assertThatThrownBy(InputView::readBuyLotto)
+        assertThatThrownBy(inputView::readBuyLotto)
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

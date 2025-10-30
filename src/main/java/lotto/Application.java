@@ -5,19 +5,21 @@ import java.util.List;
 
 public class Application {
     public static void main(String[] args) {
-        OutputView.printMoneyQuestion();
-        int count = InputView.readBuyLotto();
+        //객체 생성
+        LottoGenerator lottoGenerator = new LottoGenerator();
+        InputView inputView = new InputView();
+        OutputView outputView = new OutputView();
 
-        OutputView.printCount(count);
+        //변수 생성
+        int count = inputView.readBuyLotto();
 
-        LottoGenerator generator = new LottoGenerator();
-        List<Lotto> lottos = new ArrayList<>();
+        //메인 흐름
+        outputView.printMoneyQuestion();
 
-        for (int i = 0; i < count; i++) {
-            Lotto lotto = new Lotto(generator.generateNumbers());
-            lottos.add(lotto);
-        }
+        outputView.printCount(count);
 
-        OutputView.printLottos(lottos);
+        List<Lotto> lottos = lottoGenerator.generateLottos(count);
+
+        outputView.printLottos(lottos);
     }
 }
