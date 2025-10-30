@@ -7,14 +7,15 @@ public class Application {
     public static void main(String[] args) {
         //객체 생성
         LottoGenerator lottoGenerator = new LottoGenerator();
+        Validator validator = new Validator();
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
 
-        //변수 생성
-        int count = inputView.readBuyLotto();
+        int count;
 
         //메인 흐름
         outputView.printMoneyQuestion();
+        count = validator.validateBuyLotto(inputView.read());
 
         outputView.printCount(count);
 
@@ -22,4 +23,14 @@ public class Application {
 
         outputView.printLottos(lottos);
     }
+
+    int bonusNumber;
+
+        outputView.printWinningLottoQuestion();
+    String winningLottos = inputView.read();
+
+    String[] winningLotto = winningLottos.trim().split(",");
+
+        outputView.printBonusNumberQuestion();
+    bonusNumber = inputView.read();
 }
