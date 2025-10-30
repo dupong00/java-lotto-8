@@ -4,8 +4,10 @@
 
 # 기능 목록
 **1. 로또 구입 금액 입력 기능**
-- [ ]  로또 구매 금액을 입력받는다.
-    - [ ]  [예외] 입력 값이 숫자가 아닌경우 IllegalArgumentException예외를 발생시킨다.
+- [x]  로또 구매 금액을 입력받는다.
+    - [x]  [예외] 구매 금액이 숫자가 아닌경우 IllegalArgumentException예외를 발생시킨다.
+    - [x]  [예외] 구매 금액이 최소 단위보다 작은 경우 IllegalArgumentException예외를 발생시킨다.
+    - [x]  [예외] 구매 금액이 단위에 맞지 않은 경우 IllegalArgumentException예외를 발생시킨다.
 
 **2. 로또 발행 및 출력 기능**
 - [ ]  구입 금액에 해당하는 개수만큼 로또를 발행한다.
