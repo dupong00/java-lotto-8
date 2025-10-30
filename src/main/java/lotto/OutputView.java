@@ -2,6 +2,7 @@ package lotto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
     public void printMoneyQuestion() {
@@ -22,5 +23,8 @@ public class OutputView {
         for(Lotto lotto : lottos) {
             System.out.println(lotto.getNumbers());
         }
+    }
+
+    public void printTotalWinningStatus(Map<RANK, Integer> winningCount) {
     }
 }

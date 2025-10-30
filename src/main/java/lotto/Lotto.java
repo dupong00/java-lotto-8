@@ -28,5 +28,18 @@ public class Lotto {
         return numbers;
     }
 
-    // TODO: 추가 기능 구현
+    public int getMatchCount(List<Integer> winningLottos) {
+        int currectCount = 0;
+
+        for(int lottoNumber: winningLottos) {
+            if (numbers.contains(lottoNumber)){
+                currectCount ++;
+            }
+        }
+        return currectCount;
+    }
+
+    public boolean hasBonus(int bonusNumber){
+        return this.numbers.contains(bonusNumber);
+    }
 }
