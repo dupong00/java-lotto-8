@@ -1,9 +1,5 @@
 package lotto;
 
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
-
 public class Application {
     public static void main(String[] args) {
         //객체 생성
@@ -12,38 +8,8 @@ public class Application {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
 
-        int count;
-        int bonusNumber;
-        double roi;
-        Map<RANK, Integer> winningCount;
+        Controller controller = new Controller(inputView,outputView, validator, lottoService);
 
-        //메인 흐름
-        try {
-            outputView.printMoneyQuestion();
-            count = validator.validateBuyLotto(inputView.read());
-
-            outputView.printCount(count);
-
-            List<Lotto> lottos = lottoService.generateLottos(count);
-
-            outputView.printLottos(lottos);
-
-            outputView.printWinningLottoQuestion();
-
-            List<Integer> winningLotto = lottoService.parse(inputView.read());
-            validator.validateWinningLotto(winningLotto);
-
-            outputView.printBonusNumberQuestion();
-            bonusNumber = validator.validateBonusNumber(inputView.read(), winningLotto);
-
-            winningCount = lottoService.countingLotto(lottos, winningLotto, bonusNumber);
-
-            outputView.printTotalWinningStatus(winningCount);
-
-            roi = lottoService.calculateROI(winningCount);
-            outputView.printROI(roi);
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        controller.run();
     }
 }
