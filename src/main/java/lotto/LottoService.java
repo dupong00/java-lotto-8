@@ -61,6 +61,9 @@ public class LottoService {
         String[] parts = input.trim().split(",");
         List<Integer> winningLotto = new ArrayList<>();
         for (String  part : parts){
+            if (part == null || part.trim().isEmpty()) {
+                throw new IllegalArgumentException("[ERROR] 당첨 번호에 공백 입력이 불가합니다.");
+            }
             int number = Integer.parseInt(part);
             winningLotto.add(number);
         }
