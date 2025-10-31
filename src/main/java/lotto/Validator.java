@@ -35,7 +35,7 @@ public class Validator {
 
         try {
             for(String part : parts){
-                int number = Integer.parseInt(part);
+                int number = Integer.parseInt(part.trim());
                 validateNumberRange(number);
                 winningLottos.add(number);
             }
@@ -47,12 +47,13 @@ public class Validator {
         return winningLottos;
     }
 
-    public int validateBonusNumber(String input) {
+    public int validateBonusNumber(String input, List<Integer> winningLottos) {
         int bonusNumber;
 
         try{
              bonusNumber = Integer.parseInt(input);
              validateNumberRange(bonusNumber);
+             validateNotDuplicationNumber(bonusNumber, winningLottos);
         }catch(NumberFormatException e){
             throw new IllegalArgumentException(ERROR + "숫자만 입력 가능합니다.");
         }
@@ -63,6 +64,13 @@ public class Validator {
     private void validateNumberRange(int number) {
         if (MIN_NUM > number || number > MAX_NUM){
             throw new IllegalArgumentException(ERROR + "로또 번호는 1부터 45 사이의 숫자여야 합니다.");
+        }
+    }
+    private void validateNotDuplicationNumber(int bonusNumber, List<Integer> winningLottos) {
+        for(int number:winningLottos){
+            if (number == bonusNumber){
+                throw new IllegalArgumentException(ERROR + "보너스 번호는 당첨 번호와 중복될 수 없습니다.");
+            }
         }
     }
 }
