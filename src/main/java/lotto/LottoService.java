@@ -3,7 +3,6 @@ package lotto;
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +38,7 @@ public class LottoService {
         }
         return winningCount;
     }
+
     public double calculateROI(Map<RANK, Integer> winningCounts){
         double total = 0;
         int count = 0;
