@@ -29,20 +29,21 @@ public class Application {
             outputView.printLottos(lottos);
 
             outputView.printWinningLottoQuestion();
-            List<Integer> winningLottos = validator.validateWinningLottoToParse(inputView.read());
+
+            List<Integer> winningLotto = lottoService.parse(inputView.read());
+            validator.validateWinningLotto(winningLotto);
 
             outputView.printBonusNumberQuestion();
-            bonusNumber = validator.validateBonusNumber(inputView.read(), winningLottos);
+            bonusNumber = validator.validateBonusNumber(inputView.read(), winningLotto);
 
-            winningCount = lottoService.countingLotto(lottos, winningLottos, bonusNumber);
+            winningCount = lottoService.countingLotto(lottos, winningLotto, bonusNumber);
 
             outputView.printTotalWinningStatus(winningCount);
 
             roi = lottoService.calculateROI(winningCount);
             outputView.printROI(roi);
-        }catch (IllegalArgumentException e) {
+        }catch (Exception e) {
             System.out.println(e.getMessage());
-            throw e;
         }
     }
 }

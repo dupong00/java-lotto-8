@@ -1,6 +1,7 @@
 package lotto;
 
 import camp.nextstep.edu.missionutils.Randoms;
+import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -55,4 +56,15 @@ public class LottoService {
         total = Math.round(total * 10000) / 100.0;
         return total;
     }
+
+    public List<Integer> parse(String input){
+        String[] parts = input.trim().split(",");
+        List<Integer> winningLotto = new ArrayList<>();
+        for (String  part : parts){
+            int number = Integer.parseInt(part);
+            winningLotto.add(number);
+        }
+        return winningLotto;
+    }
+
 }

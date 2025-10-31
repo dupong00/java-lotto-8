@@ -2,7 +2,9 @@ package lotto;
 
 import java.net.Inet4Address;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Validator {
     private static final int MIN_ORDER_UNIT = 1000;
@@ -29,27 +31,15 @@ public class Validator {
         return money / MIN_ORDER_UNIT;
     }
 
-    public List<Integer> validateWinningLottoToParse(String input) {
-        String[] parts = input.trim().split(",");
-        List<Integer> winningLottos = new ArrayList<>();
-
-        try {
-            for(String part : parts){
-                int number = Integer.parseInt(part.trim());
-                validateNumberRange(number);
-                winningLottos.add(number);
-            }
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(ERROR + "당첨 번호는 숫자만 입력 가능합니다.");
+    public void validateWinningLotto(List<Integer> winningLotto) {
+        validateUniqueNumber(winningLotto);
+        for(int number : winningLotto){
+            validateNumberRange(number);
         }
-
-
-        return winningLottos;
     }
 
     public int validateBonusNumber(String input, List<Integer> winningLottos) {
         int bonusNumber;
-
         try{
              bonusNumber = Integer.parseInt(input);
              validateNumberRange(bonusNumber);
@@ -57,7 +47,6 @@ public class Validator {
         }catch(NumberFormatException e){
             throw new IllegalArgumentException(ERROR + "숫자만 입력 가능합니다.");
         }
-
         return bonusNumber;
     }
 
@@ -71,6 +60,15 @@ public class Validator {
             if (number == bonusNumber){
                 throw new IllegalArgumentException(ERROR + "보너스 번호는 당첨 번호와 중복될 수 없습니다.");
             }
+        }
+    }
+    private void validateUniqueNumber(List<Integer> winningLotto) {
+        Set<Integer> uniqueNumbers = new HashSet<>();
+        for(int number:winningLotto){
+            if(uniqueNumbers.contains(number)){
+                throw new IllegalArgumentException(ERROR + "당첨 번호는 중복될 수 없습니다.");
+            }
+            uniqueNumbers.add(number);
         }
     }
 }
