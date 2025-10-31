@@ -14,43 +14,35 @@ public class Application {
 
         int count;
         int bonusNumber;
-        Map<RANK, Integer> winningCount = new EnumMap<>(RANK.class);
+        double roi;
+        Map<RANK, Integer> winningCount;
 
         //메인 흐름
-        outputView.printMoneyQuestion();
-        count = validator.validateBuyLotto(inputView.read());
-        outputView.print();
+        try {
+            outputView.printMoneyQuestion();
+            count = validator.validateBuyLotto(inputView.read());
 
-        outputView.printCount(count);
+            outputView.printCount(count);
 
-        List<Lotto> lottos = lottoService.generateLottos(count);
+            List<Lotto> lottos = lottoService.generateLottos(count);
 
-        outputView.printLottos(lottos);
-        outputView.print();
+            outputView.printLottos(lottos);
 
-        outputView.printWinningLottoQuestion();
-        List<Integer> winningLottos = validator.validateWinningLottoToParse(inputView.read());
-        outputView.print();
+            outputView.printWinningLottoQuestion();
+            List<Integer> winningLottos = validator.validateWinningLottoToParse(inputView.read());
 
-        outputView.printBonusNumberQuestion();
-        bonusNumber = validator.validateBonusNumber(inputView.read());
-        outputView.print();
+            outputView.printBonusNumberQuestion();
+            bonusNumber = validator.validateBonusNumber(inputView.read(), winningLottos);
 
-        for (RANK rank : RANK.values()) {
-            winningCount.put(rank, 0);
+            winningCount = lottoService.countingLotto(lottos, winningLottos, bonusNumber);
+
+            outputView.printTotalWinningStatus(winningCount);
+
+            roi = lottoService.calculateROI(winningCount);
+            outputView.printROI(roi);
+        }catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            throw e;
         }
-
-        for(Lotto lotto : lottos){
-            int matchCount = lotto.getMatchCount(winningLottos);
-            boolean isBonus = lotto.hasBonus(bonusNumber);
-            RANK myrank = RANK.valueOf(matchCount, isBonus);
-
-            winningCount.put(myrank, winningCount.get(myrank) + 1);
-        }
-
-        outputView.printTotalWinningStatus(winningCount);
-
-        double roi = lottoService.calculateROI(winningCount);
-        outputView.printROI(roi);
     }
 }
