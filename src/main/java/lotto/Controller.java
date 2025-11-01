@@ -34,12 +34,13 @@ public class Controller {
     }
 
     private int buyLotto(){
-        try{
-            outputView.printMoneyQuestion();
-            return validator.validateBuyLotto(inputView.read());
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-            throw e;
+        while(true){
+            try{
+                outputView.printMoneyQuestion();
+                return validator.validateBuyLotto(inputView.read());
+            }catch(IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
         }
     }
 

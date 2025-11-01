@@ -15,8 +15,7 @@ public class Validator {
         try{
             money = Integer.parseInt(input);
         }catch(NumberFormatException e){
-            System.out.println(ERROR+ "금액은 숫자만 입력가능합니다.");
-            throw e;
+            throw new IllegalArgumentException(ERROR+ "금액은 숫자만 입력가능합니다.");
         }
 
         if (money < MIN_ORDER_UNIT){
