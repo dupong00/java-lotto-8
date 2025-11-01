@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class LottoService {
+    private static final int LOTTO_PRICE = 1000;
 
     public List<Lotto> generateLottos(int count){
         List<Lotto> lottos = new ArrayList<>();
@@ -52,9 +53,9 @@ public class LottoService {
 
             total += matchCount * prize;
         }
-        total /= count * 1000;
-        total = Math.round(total * 10000) / 100.0;
-        return total;
+
+        double rate = (total / (count * LOTTO_PRICE)) * 100;
+        return Math.round(rate * 10) / 10.0;
     }
 
     public List<Integer> parse(String input){
