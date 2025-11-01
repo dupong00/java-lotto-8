@@ -64,8 +64,13 @@ public class LottoService {
             if (part == null || part.trim().isEmpty()) {
                 throw new IllegalArgumentException("[ERROR] 당첨 번호에 공백 입력이 불가합니다.");
             }
-            int number = Integer.parseInt(part);
-            winningLotto.add(number);
+            try{
+                int number = Integer.parseInt(part);
+                winningLotto.add(number);
+            }catch (NumberFormatException e){
+                throw new IllegalArgumentException("[ERROR] 당첨 번호는 숫자만 입력 가능합니다.");
+            }
+
         }
         return winningLotto;
     }
