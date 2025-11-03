@@ -6,19 +6,16 @@ import java.util.Map;
 
 public class OutputView {
     public void printMoneyQuestion() {
-        System.out.println("구입금액을 입력해 주세요.");
+        System.out.println(OutputMessage.MONEY_QUESTION.getMessage());
     }
     public void printCount(int count) {
-        System.out.println();
-        System.out.println(count + "개를 구매했습니다.");
+        System.out.printf(OutputMessage.COUNT_MESSAGE.getMessage() + "\n", count);
     }
     public void printWinningLottoQuestion() {
-        System.out.println();
-        System.out.println("당첨 번호를 입력해 주세요.");
+        System.out.println(OutputMessage.WINNING_LOTTO_QUESTION.getMessage());
     }
     public void printBonusNumberQuestion() {
-        System.out.println();
-        System.out.println("보너스 번호를 입력해 주세요.");
+        System.out.println(OutputMessage.BONUS_NUMBER_QUESTION.getMessage());
     }
     public void printLottos(List<Lotto> lottos) {
         for(Lotto lotto : lottos) {
@@ -29,9 +26,8 @@ public class OutputView {
     public void printTotalWinningStatus(Map<RANK, Integer> winningCount) {
         DecimalFormat df = new DecimalFormat("###,###");
 
-        System.out.println();
-        System.out.println("당첨 통계");
-        System.out.println("---");
+        System.out.println(OutputMessage.STATUS_MESSAGE.getMessage());
+
         for(Map.Entry<RANK, Integer> entry : winningCount.entrySet()) {
             RANK key = entry.getKey();
 
@@ -44,14 +40,14 @@ public class OutputView {
             int money = key.getPrizeMoney();
 
             if(key == RANK.SECOND){
-                System.out.println(matchCount + "개 일치, 보너스 볼 일치 (" + df.format(money) + "원) - " + value + "개");
+                System.out.printf(OutputMessage.RANK_SECOND.getMessage() + "\n", matchCount,df.format(money), value);
                 continue;
             }
 
-            System.out.println(matchCount + "개 일치 (" + df.format(money) + "원) - " + value + "개");
+            System.out.printf(OutputMessage.RANK_STANDARD.getMessage() + "\n", matchCount,df.format(money), value);
         }
     }
     public void printROI(double roi){
-        System.out.println("총 수익률은 " + roi + "%입니다.");
+        System.out.printf(OutputMessage.ROI_MESSAGE.getMessage() + "\n", roi);
     }
 }
