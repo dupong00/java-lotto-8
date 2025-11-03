@@ -1,11 +1,13 @@
-package lotto;
+package lotto.service;
 
 import camp.nextstep.edu.missionutils.Randoms;
-import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import lotto.enums.ErrorMessage;
+import lotto.domain.RANK;
+import lotto.domain.Lotto;
 
 public class LottoService {
     private static final int LOTTO_PRICE = 1000;

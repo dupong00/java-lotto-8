@@ -1,8 +1,9 @@
-package lotto;
+package lotto.util;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import lotto.enums.ErrorMessage;
 
 public class Validator {
     private static final int MIN_ORDER_UNIT = 1000;

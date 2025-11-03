@@ -1,8 +1,11 @@
-package lotto;
+package lotto.view;
 
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
+import lotto.enums.OutputMessage;
+import lotto.domain.RANK;
+import lotto.domain.Lotto;
 
 public class OutputView {
     public void printMoneyQuestion() {

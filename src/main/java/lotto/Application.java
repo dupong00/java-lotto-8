@@ -1,5 +1,10 @@
 package lotto;
 
+import lotto.service.LottoService;
+import lotto.util.Validator;
+import lotto.view.InputView;
+import lotto.view.OutputView;
+
 public class Application {
     public static void main(String[] args) {
         //객체 생성

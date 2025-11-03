@@ -17,11 +17,11 @@
 
 **3. 당첨 번호 및 보너스 번호 입력 기능**
 - [x]  당첨 번호 6개를 쉼표를 이용해 구분하여 입력받는다.
-- [x]  [예외] 숫자가 1~45를 벗어난 경우 IllegalArgumentException예외를 발생시킨다.
-- [x]  [예외] 6개가 아니거나 중복된 숫자가 있는 경우 IllegalArgumentException예외를 발생시킨다.
+    - [x]  [예외] 숫자가 1~45를 벗어난 경우 IllegalArgumentException예외를 발생시킨다.
+    - [x]  [예외] 6개가 아니거나 중복된 숫자가 있는 경우 IllegalArgumentException예외를 발생시킨다.
 - [x]  보너스 번호 1개를 입력받는다.
-- [x]  [예외] 숫자가 1~45를 벗어난 경우 IllegalArgumentException예외를 발생시킨다.
-- [x]  [예외] 6개가 아니거나 중복된 숫자가 있는 경우 IllegalArgumentException예외를 발생시킨다
+    - [x]  [예외] 숫자가 1~45를 벗어난 경우 IllegalArgumentException예외를 발생시킨다.
+    - [x]  [예외] 6개가 아니거나 중복된 숫자가 있는 경우 IllegalArgumentException예외를 발생시킨다
 
 **4. 당첨 통계 계산 기능**
 - [x]  입력 받은 당첨 번호와 구매한 로또의 숫자를 비교한다.

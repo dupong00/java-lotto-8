@@ -1,8 +1,13 @@
 package lotto;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import lotto.domain.Lotto;
+import lotto.domain.RANK;
+import lotto.service.LottoService;
+import lotto.util.Validator;
+import lotto.view.InputView;
+import lotto.view.OutputView;
 
 public class Controller {
     private final InputView inputView;
