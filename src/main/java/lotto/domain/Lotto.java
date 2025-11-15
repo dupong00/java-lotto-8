@@ -38,6 +38,13 @@ public class Lotto {
         }
     }
 
+    public boolean contains(int bonusNumber) {
+        return this.numbers.contains(bonusNumber);
+    }
 
-    // TODO: 추가 기능 구현
+    public int calculateMatchCount(Lotto other) {
+        return (int) this.numbers.stream()
+                .filter(other.numbers::contains)
+                .count();
+    }
 }
