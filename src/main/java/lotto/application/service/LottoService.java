@@ -4,13 +4,17 @@ import camp.nextstep.edu.missionutils.Randoms;
 import java.util.List;
 import java.util.stream.Stream;
 import lotto.application.port.in.LottoPurchaseUseCase;
+import lotto.application.port.out.LottoRepository;
 import lotto.domain.ErrorMessage;
 import lotto.domain.Lotto;
 
 public class LottoService implements LottoPurchaseUseCase {
-
+    private final LottoRepository lottoRepository;
     final int MIN_ORDER_UNIT = 1000;
 
+    public LottoService(LottoRepository lottoRepository) {
+        this.lottoRepository = lottoRepository;
+    }
     @Override
     public List<Lotto> purchaseLottos(String amount){
         int money = validatePurchase(amount);
@@ -20,6 +24,8 @@ public class LottoService implements LottoPurchaseUseCase {
         List<Lotto> autoLottos = Stream.generate(this::generateAutoLotto)
                 .limit(count)
                 .toList();
+
+        lottoRepository.saveAll(autoLottos);
 
         return autoLottos;
     }

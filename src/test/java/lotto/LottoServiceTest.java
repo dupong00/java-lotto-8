@@ -1,5 +1,6 @@
 package lotto;
 
+import lotto.adapter.out.InMemoryLottoRepository;
 import lotto.application.service.LottoService;
 import lotto.domain.ErrorMessage;
 import lotto.domain.Lotto;
@@ -10,13 +11,16 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import lotto.application.port.out.LottoRepository;
 
 class LottoServiceTest {
     private LottoService lottoService;
+    private LottoRepository lottoRepository;
 
     @BeforeEach
     void setUp() {
-        this.lottoService = new LottoService();
+        lottoRepository = new InMemoryLottoRepository();
+        this.lottoService = new LottoService(lottoRepository);
     }
 
     @Test
