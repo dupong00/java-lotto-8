@@ -15,6 +15,10 @@ public class LottoStatus {
         this.purchaseMoney = purchaseMoney;
     }
 
+    public Map<RANK, Integer> getRankCounts(){
+        return rankCounts;
+    };
+
     public static LottoStatus of(List<Lotto> userLotto, WinningLotto winningLotto, int purchaseMoney) {
         Map<RANK, Integer> rankCounts = new EnumMap<>(RANK.class);
         for (RANK rank : RANK.values()) {
