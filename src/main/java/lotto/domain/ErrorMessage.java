@@ -9,6 +9,9 @@ public enum ErrorMessage {
     INVALID_LOTTO_SIZE("로또 번호는 6개여야 합니다."),
     INVALID_LOTTO_DUPLICATE("로또 번호는 중복 될 수 없습니다."),
 
+    INVALID_WINNING_LOTTO_NOT_NUMBER("당첨 번호는 숫자여야 합니다."),
+
+    INVALID_BONUS_NOT_NUMBER("보너스 번호는 숫자여야 합니다."),
     INVALID_BONUS_RANGE("보너스 번호는 1에서 45 사이의 숫자만 가능합니다."),
     INVALID_BONUS_DUPLICATE("보너스 번호는 로또 번호와 중복 될 수 없습니다.");
 
