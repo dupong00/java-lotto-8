@@ -1,6 +1,7 @@
 package lotto.application.service;
 
 import camp.nextstep.edu.missionutils.Randoms;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import lotto.application.port.in.LottoPurchaseUseCase;
@@ -17,18 +18,28 @@ public class LottoService implements LottoPurchaseUseCase {
     }
 
     @Override
-    public List<Lotto> purchaseLottos(int money){
+    public List<Lotto> purchaseLottos(int money, List<List<Integer>> manualNumbers){
         validatePurchase(money);
 
-        int count = money / MIN_ORDER_UNIT;
-
-        List<Lotto> autoLottos = Stream.generate(this::generateAutoLotto)
-                .limit(count)
+        List<Lotto> manualLottos = manualNumbers.stream()
+                .map(Lotto::new)
                 .toList();
 
-        lottoRepository.saveAll(autoLottos);
+        validateManualPurchase(money, manualLottos.size());
 
-        return autoLottos;
+        int remainingMoney = money - (manualLottos.size() * MIN_ORDER_UNIT);
+        int autoCount = remainingMoney / MIN_ORDER_UNIT;
+
+        List<Lotto> autoLottos = Stream.generate(this::generateAutoLotto)
+                .limit(autoCount)
+                .toList();
+
+        List<Lotto> allLottos = new ArrayList<>(manualLottos);
+        allLottos.addAll(autoLottos);
+
+        lottoRepository.saveAll(allLottos);
+
+        return allLottos;
     }
 
     private void validatePurchase(int money){
@@ -37,6 +48,13 @@ public class LottoService implements LottoPurchaseUseCase {
         }
         if (money % MIN_ORDER_UNIT != 0){
             throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_NOT_UNIT.getMessage());
+        }
+    }
+
+    private void validateManualPurchase(int money, int size){
+        int manualCost = size * MIN_ORDER_UNIT;
+        if (money < manualCost) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_MANUAL_PURCHASE_OVER.getMessage());
         }
     }
 

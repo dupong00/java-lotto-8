@@ -1,5 +1,6 @@
 package lotto.adapter.in;
 
+import java.util.ArrayList;
 import java.util.List;
 import lotto.application.port.in.LottoPurchaseUseCase;
 import lotto.application.port.in.LottoStatusUseCase;
@@ -29,28 +30,74 @@ public class LottoController {
     }
 
     public void run(){
-        int purchaseMoney = purchaseLottos();
+        int purchaseMoney = getValidPurchaseMoney();
+
+        int manualCount = getValidManualCount(purchaseMoney);
+
+        List<List<Integer>> manualNumbers = getValidManualNumbers(manualCount);
+
+        List<Lotto> lottos = lottoPurchaseUseCase.purchaseLottos(purchaseMoney, manualNumbers);
+
+        outputView.printPurchaseLotto(manualCount, lottos);
 
         setUpWinningLotto();
 
         showStatus(purchaseMoney);
     }
 
-    private int purchaseLottos(){
-        while(true){
-            try{
+    private int getValidPurchaseMoney(){
+        while(true) {
+            try {
                 String moneyInput = inputView.readPurchaseMoney();
-                int money = inputMapper.parseIntMoney(moneyInput);
-
-                List<Lotto> lottos = lottoPurchaseUseCase.purchaseLottos(money);
-
-                outputView.printPurchaseLotto(lottos);
-
-                return money;
-            }catch(IllegalArgumentException e){
+                return inputMapper.parseIntMoney(moneyInput);
+            } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
+        }
+    }
 
+    private int getValidManualCount(int money){
+        while(true){
+            try{
+                String manualCountInput = inputView.readManualCount();
+                int count = inputMapper.parseIntManualCount(manualCountInput);
+                if(money / 1000 >= count){
+                    return count;
+                }
+            }catch(IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private List<List<Integer>> getValidManualNumbers(int manualCount){
+        List<List<Integer>> manualNumbers = new ArrayList<>();
+
+        if (manualCount == 0) {
+            return manualNumbers;
+        }
+
+        for (int i = 0; i < manualCount; i++) {
+            manualNumbers.add(getOneValidLotto(i + 1, manualCount));
+        }
+
+        return manualNumbers;
+    }
+
+    private List<Integer> getOneValidLotto(int currentOrder, int totalCount) {
+        while (true) {
+            try {
+                OutputMessage.MANUAL_INPUT.print(currentOrder, totalCount);
+
+                String numbersInput = inputView.readManualNumber();
+                List<Integer> numbers = inputMapper.toLottoList(numbersInput);
+
+                new Lotto(numbers);
+
+                return numbers;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 

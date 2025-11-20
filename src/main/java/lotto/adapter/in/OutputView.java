@@ -8,8 +8,11 @@ import lotto.domain.RANK;
 
 public class OutputView {
 
-    public void printPurchaseLotto(List<Lotto> lottos) {
-        OutputMessage.PURCHASE_COUNT.print(lottos.size());
+    public void printPurchaseLotto(int manualCount, List<Lotto> lottos) {
+        if(manualCount != 0){
+            OutputMessage.PURCHASE_MANUAL_COUNT.print(manualCount);
+        }
+        OutputMessage.PURCHASE_AUTO_COUNT.print(lottos.size() -  manualCount);
 
         for (Lotto lotto : lottos) {
             System.out.println(lotto.getNumbers());

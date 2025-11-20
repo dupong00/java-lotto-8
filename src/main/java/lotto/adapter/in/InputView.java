@@ -17,4 +17,13 @@ public class InputView {
         OutputMessage.BONUS_NUMBER.print();
         return Console.readLine();
     }
+
+    public String readManualCount(){
+        OutputMessage.MANUAL_COUNT.print();
+        return Console.readLine();
+    }
+
+    public String readManualNumber(){
+        return Console.readLine();
+    }
 }
