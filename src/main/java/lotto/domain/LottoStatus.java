@@ -33,12 +33,12 @@ public class LottoStatus {
         return new LottoStatus(rankCounts, purchaseMoney);
     }
 
-    public int getTotalPrize(){
-        int totalPrize = 0;
+    public long getTotalPrize(){
+        long totalPrize = 0L;
 
         for (Map.Entry<RANK, Integer> entry : rankCounts.entrySet()) {
             RANK rank = entry.getKey();
-            int count = entry.getValue();
+            long count = entry.getValue();
 
             totalPrize += (rank.prize * count);
         }
@@ -47,7 +47,7 @@ public class LottoStatus {
     }
 
     public double getRateOfPrize(){
-        int totalPrize = getTotalPrize();
+        long totalPrize = getTotalPrize();
 
         if (purchaseMoney == 0){
             return 0.0;
