@@ -26,7 +26,7 @@ class LottoServiceTest {
     @Test
     @DisplayName("성공: 3000원 입력 시 로또 3장을 정상 생성한다")
     void 로또_구매_성공() {
-        String amount = "3000";
+        int amount = 3000;
 
         List<Lotto> purchasedLottos = lottoService.purchaseLottos(amount);
 
@@ -34,19 +34,9 @@ class LottoServiceTest {
     }
 
     @Test
-    @DisplayName("실패: 숫자가 아닌 금액(1000j) 입력 시 예외 발생")
-    void 로또_구매_금액_숫자_아닌_경우() {
-        String amount = "1000j";
-
-        assertThatThrownBy(() -> lottoService.purchaseLottos(amount))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ErrorMessage.INVALID_PURCHASE_NOT_NUMBER.getMessage());
-    }
-
-    @Test
     @DisplayName("실패: 1000원 단위가 아닌 금액(1500) 입력 시 예외 발생")
     void 로또_구매_금액_1000단위_아닌_경우() {
-        String amount = "1500";
+        int amount = 1500;
 
         assertThatThrownBy(() -> lottoService.purchaseLottos(amount))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -56,7 +46,7 @@ class LottoServiceTest {
     @Test
     @DisplayName("실패: 최소 금액(1000원) 미만 입력 시 예외 발생")
     void 로또_구매_금액_1000원_미만인_경우() {
-        String amount = "500";
+        int amount = 500;
 
         assertThatThrownBy(() -> lottoService.purchaseLottos(amount))
                 .isInstanceOf(IllegalArgumentException.class)

@@ -1,5 +1,6 @@
 package lotto;
 
+import lotto.adapter.in.InputMapper;
 import lotto.adapter.in.InputView;
 import lotto.adapter.in.LottoController;
 import lotto.adapter.in.OutputView;
@@ -29,10 +30,12 @@ public class Application {
 
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
+        InputMapper inputMapper = new InputMapper();
 
         LottoController controller = new LottoController(
                 inputView,
                 outputView,
+                inputMapper,
                 purchaseService,
                 statusService,
                 winningLottoService

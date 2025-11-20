@@ -10,16 +10,19 @@ import lotto.domain.LottoStatus;
 public class LottoController {
     private final InputView inputView;
     private final OutputView outputView;
+    private final InputMapper inputMapper;
 
     private final LottoPurchaseUseCase lottoPurchaseUseCase;
     private final LottoStatusUseCase lottoStatusUseCase;
     private final WinningLottoUseCase winningLottoUseCase;
 
-    public LottoController(InputView inputView, OutputView outputView,
+    public LottoController(InputView inputView, OutputView outputView, InputMapper inputMapper,
                            LottoPurchaseUseCase purchase, LottoStatusUseCase status,
                            WinningLottoUseCase winningLottoUseCase) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.inputMapper = inputMapper;
+
         this.lottoPurchaseUseCase = purchase;
         this.lottoStatusUseCase = status;
         this.winningLottoUseCase = winningLottoUseCase;
@@ -36,13 +39,14 @@ public class LottoController {
     private int purchaseLottos(){
         while(true){
             try{
-                String money = inputView.readPurchaseMoney();
+                String moneyInput = inputView.readPurchaseMoney();
+                int money = inputMapper.parseIntMoney(moneyInput);
 
                 List<Lotto> lottos = lottoPurchaseUseCase.purchaseLottos(money);
 
                 outputView.printPurchaseLotto(lottos);
 
-                return Integer.parseInt(money);
+                return money;
             }catch(IllegalArgumentException e){
                 System.out.println(e.getMessage());
             }

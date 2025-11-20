@@ -4,5 +4,5 @@ import java.util.List;
 import lotto.domain.Lotto;
 
 public interface LottoPurchaseUseCase {
-    List<Lotto> purchaseLottos(String amountString);
+    List<Lotto> purchaseLottos(int money);
 }

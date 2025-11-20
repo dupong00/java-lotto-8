@@ -15,9 +15,10 @@ public class LottoService implements LottoPurchaseUseCase {
     public LottoService(LottoRepository lottoRepository) {
         this.lottoRepository = lottoRepository;
     }
+
     @Override
-    public List<Lotto> purchaseLottos(String amount){
-        int money = validatePurchase(amount);
+    public List<Lotto> purchaseLottos(int money){
+        validatePurchase(money);
 
         int count = money / MIN_ORDER_UNIT;
 
@@ -30,22 +31,13 @@ public class LottoService implements LottoPurchaseUseCase {
         return autoLottos;
     }
 
-    private int validatePurchase(String amount){
-        int money;
-
-        try{
-            money = Integer.parseInt(amount);
-        }catch(NumberFormatException e){
-            throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_NOT_NUMBER.getMessage());
-        }
+    private void validatePurchase(int money){
         if (money < MIN_ORDER_UNIT){
             throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_NOT_MIN_ORDER.getMessage());
         }
         if (money % MIN_ORDER_UNIT != 0){
             throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_NOT_UNIT.getMessage());
         }
-
-        return money;
     }
 
     private Lotto generateAutoLotto() {
