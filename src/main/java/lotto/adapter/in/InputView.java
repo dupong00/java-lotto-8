@@ -26,4 +26,13 @@ public class InputView {
     public String readManualNumber(){
         return Console.readLine();
     }
+
+    public String readAutoWinningLotto(){
+        OutputMessage.WINNING_LOTTO_STATUS.print();
+        return Console.readLine();
+    }
+    public String readWinningLottoRound(){
+        OutputMessage.WINNING_LOTTO_ROUND.print();
+        return Console.readLine();
+    }
 }

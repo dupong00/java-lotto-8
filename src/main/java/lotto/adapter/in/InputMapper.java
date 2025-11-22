@@ -38,4 +38,14 @@ public class InputMapper {
         }
     }
 
+    public int parseIntRound(String input) {
+        int round;
+        try{
+            round = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_WINNING_LOTTO_ROUND.getMessage());
+        }
+        return round;
+    }
+
 }

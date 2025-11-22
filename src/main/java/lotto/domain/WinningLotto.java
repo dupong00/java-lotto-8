@@ -15,6 +15,18 @@ public class WinningLotto {
         validateBonusNumber(bonusNumber);
     }
 
+    public int getRound() {
+        return round;
+    }
+
+    public Lotto getLotto() {
+        return lotto;
+    }
+
+    public int getBonusNumber() {
+        return bonusNumber;
+    }
+
     private void validateBonusNumber(int bonusNumber) {
         validateBonusNumberRange(bonusNumber);
         validateBonusNumberDuplicate(bonusNumber);

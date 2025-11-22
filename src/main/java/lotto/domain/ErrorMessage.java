@@ -13,7 +13,11 @@ public enum ErrorMessage {
     INVALID_LOTTO_SIZE("로또 번호는 6개여야 합니다."),
     INVALID_LOTTO_DUPLICATE("로또 번호는 중복 될 수 없습니다."),
 
+    INVALID_WINNING_LOTTO_ROUND("유효하지 않은 로또 회차입니다."),
     INVALID_WINNING_LOTTO_NOT_NUMBER("당첨 번호는 숫자여야 합니다."),
+    INVALID_WINNING_AUTO_LOTTO("y 또는 n 만 입력가능합니다."),
+    INVALID_WINNING_LOTTO_AUTO_FAIL("해당 회차 정보를 가져올 수 없습니다"),
+    INVALID_WINNING_LOTTO_API_FAIL("API 연결에 실패했습니다."),
 
     INVALID_BONUS_NOT_NUMBER("보너스 번호는 숫자여야 합니다."),
     INVALID_BONUS_RANGE("보너스 번호는 1에서 45 사이의 숫자만 가능합니다."),

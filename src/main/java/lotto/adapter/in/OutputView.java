@@ -5,6 +5,7 @@ import java.util.Map;
 import lotto.domain.Lotto;
 import lotto.domain.LottoStatus;
 import lotto.domain.RANK;
+import lotto.domain.WinningLotto;
 
 public class OutputView {
 
@@ -17,6 +18,17 @@ public class OutputView {
         for (Lotto lotto : lottos) {
             System.out.println(lotto.getNumbers());
         }
+    }
+
+    public void printWinningLotto(WinningLotto winningLotto) {
+        int round = winningLotto.getRound();
+        OutputMessage.WINNING_LOTTO_AUTO_SUCCESS.print(round);
+
+        List<Integer> numbers = winningLotto.getLotto().getNumbers();
+        int bonusNumber = winningLotto.getBonusNumber();
+
+        OutputMessage.WINNING_LOTTO_NUMBERS.print(numbers);
+        OutputMessage.WINNING_LOTTO_BONUS_NUMBER.print(bonusNumber);
     }
 
     public void printStatus(LottoStatus status){

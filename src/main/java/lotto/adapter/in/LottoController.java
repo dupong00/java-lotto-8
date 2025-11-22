@@ -5,8 +5,10 @@ import java.util.List;
 import lotto.application.port.in.LottoPurchaseUseCase;
 import lotto.application.port.in.LottoStatusUseCase;
 import lotto.application.port.in.WinningLottoUseCase;
+import lotto.domain.ErrorMessage;
 import lotto.domain.Lotto;
 import lotto.domain.LottoStatus;
+import lotto.domain.WinningLotto;
 
 public class LottoController {
     private final InputView inputView;
@@ -29,7 +31,7 @@ public class LottoController {
         this.winningLottoUseCase = winningLottoUseCase;
     }
 
-    public void run(){
+    public void run() {
         int purchaseMoney = getValidPurchaseMoney();
 
         int manualCount = getValidManualCount(purchaseMoney);
@@ -45,8 +47,8 @@ public class LottoController {
         showStatus(purchaseMoney);
     }
 
-    private int getValidPurchaseMoney(){
-        while(true) {
+    private int getValidPurchaseMoney() {
+        while (true) {
             try {
                 String moneyInput = inputView.readPurchaseMoney();
                 return inputMapper.parseIntMoney(moneyInput);
@@ -56,21 +58,21 @@ public class LottoController {
         }
     }
 
-    private int getValidManualCount(int money){
-        while(true){
-            try{
+    private int getValidManualCount(int money) {
+        while (true) {
+            try {
                 String manualCountInput = inputView.readManualCount();
                 int count = inputMapper.parseIntManualCount(manualCountInput);
-                if(money / 1000 >= count){
+                if (money / 1000 >= count) {
                     return count;
                 }
-            }catch(IllegalArgumentException e) {
+            } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
     }
 
-    private List<List<Integer>> getValidManualNumbers(int manualCount){
+    private List<List<Integer>> getValidManualNumbers(int manualCount) {
         List<List<Integer>> manualNumbers = new ArrayList<>();
 
         if (manualCount == 0) {
@@ -101,24 +103,86 @@ public class LottoController {
         }
     }
 
-    private void setUpWinningLotto(){
-        while(true){
-            try{
+    private void setUpWinningLotto() {
+        while (true) {
+            try {
+                boolean isAuto = getValidIsAuto();
+                if (isAuto) {
+                    getValidAutoWinningLotto();
+                } else {
+                    getValidManualWinningLotto();
+                }
+
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private void getValidAutoWinningLotto() {
+        while (true) {
+            try {
+                String roundInput = inputView.readWinningLottoRound();
+                int round = inputMapper.parseIntRound(roundInput);
+
+                WinningLotto winningLotto = fetchWinningLotto(round);
+
+                outputView.printWinningLotto(winningLotto);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private WinningLotto fetchWinningLotto(int round) {
+        if (round == 0) {
+            return winningLottoUseCase.setupLatestWinningLotto();
+        }
+        return winningLottoUseCase.setupAutoWinningLotto(round);
+    }
+
+    private void getValidManualWinningLotto() {
+        while (true) {
+            try {
                 String winningNumbersStr = inputView.readWinningLotto();
                 String bonusNumberStr = inputView.readBonusNumber();
 
                 winningLottoUseCase.setupWinningLotto(winningNumbersStr, bonusNumberStr);
 
                 break;
-            }catch(IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
     }
 
-    private void showStatus(int purchaseMoney){
+    private boolean getValidIsAuto(){
+        while (true){
+            try{
+                String input = inputView.readAutoWinningLotto();
+
+                if ("y".equalsIgnoreCase(input)) {
+                    return true;
+                }
+                if ("n".equalsIgnoreCase(input)) {
+                    return false;
+                }
+
+                throw new IllegalArgumentException(ErrorMessage.INVALID_WINNING_AUTO_LOTTO.getMessage());
+            }catch(IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
+        }
+
+    }
+
+
+private void showStatus(int purchaseMoney) {
         LottoStatus status = lottoStatusUseCase.calculateStatus(purchaseMoney);
 
         outputView.printStatus(status);
     }
+
 }
