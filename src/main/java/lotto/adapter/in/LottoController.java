@@ -148,14 +148,42 @@ public class LottoController {
     }
 
     private void getValidManualWinningLotto() {
+            List<Integer> winningNumbers = getValidWinningNumbers();
+
+            int bonusNumber = getValidBonusNumber(winningNumbers);
+
+            winningLottoUseCase.setupWinningLotto(winningNumbers, bonusNumber);
+    }
+
+    private List<Integer> getValidWinningNumbers() {
         while (true) {
             try {
-                String winningNumbersStr = inputView.readWinningLotto();
-                String bonusNumberStr = inputView.readBonusNumber();
+                String input = inputView.readWinningLotto();
+                List<Integer> numbers = inputMapper.toLottoList(input);
 
-                winningLottoUseCase.setupWinningLotto(winningNumbersStr, bonusNumberStr);
+                new Lotto(numbers);
 
-                break;
+                return numbers;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private int getValidBonusNumber(List<Integer> winningLotto) {
+        while (true) {
+            try {
+                String input = inputView.readBonusNumber();
+                int bonusNumber = inputMapper.parseIntBonusNumber(input);
+
+                if (bonusNumber < 1 || bonusNumber > 45) {
+                    throw new IllegalArgumentException(ErrorMessage.INVALID_LOTTO_RANGE.getMessage());
+                }
+                if (winningLotto.contains(bonusNumber)) {
+                    throw new IllegalArgumentException(ErrorMessage.INVALID_BONUS_DUPLICATE.getMessage());
+                }
+
+                return bonusNumber;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }

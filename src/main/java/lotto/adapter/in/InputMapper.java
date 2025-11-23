@@ -29,7 +29,7 @@ public class InputMapper {
 
     public List<Integer> toLottoList(String input) {
         try {
-            return Arrays.stream(input.split(","))
+            return Arrays.stream(input.split("[,\\s]+"))
                     .map(String::trim)
                     .map(Integer::parseInt)
                     .toList();
@@ -46,6 +46,16 @@ public class InputMapper {
             throw new IllegalArgumentException(ErrorMessage.INVALID_WINNING_LOTTO_ROUND.getMessage());
         }
         return round;
+    }
+
+    public int parseIntBonusNumber(String input) {
+        int bonus;
+        try{
+            bonus = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_BONUS_NOT_NUMBER.getMessage());
+        }
+        return bonus;
     }
 
 }

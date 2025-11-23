@@ -1,9 +1,10 @@
 package lotto.application.port.in;
 
+import java.util.List;
 import lotto.domain.WinningLotto;
 
 public interface WinningLottoUseCase {
-    void setupWinningLotto(String winningNumbersStr, String bonusNumberStr);
+    void setupWinningLotto(List<Integer> winningNumbersStr, int bonusNumberStr);
     WinningLotto setupAutoWinningLotto(int round);
     WinningLotto setupLatestWinningLotto();
 }
