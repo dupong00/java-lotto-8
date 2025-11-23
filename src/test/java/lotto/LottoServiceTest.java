@@ -72,6 +72,6 @@ class LottoServiceTest {
 
         assertThatThrownBy(() -> lottoService.purchaseLottos(amount, manualNumbers))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ErrorMessage.INVALID_MANUAL_PURCHASE_OVER.getMessage());
+                .hasMessageContaining(ErrorMessage.INVALID_PURCHASE_OVER.getMessage());
     }
 }
