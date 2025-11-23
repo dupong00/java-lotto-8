@@ -7,18 +7,18 @@ import java.util.Map;
 public class LottoStatus {
 
     private final Map<RANK, Integer> rankCounts;
-    private final int purchaseMoney;
+    private final Money money;
 
-    private LottoStatus(Map<RANK, Integer> rankCounts, int purchaseMoney) {
+    private LottoStatus(Map<RANK, Integer> rankCounts, Money money) {
         this.rankCounts = rankCounts;
-        this.purchaseMoney = purchaseMoney;
+        this.money = money;
     }
 
     public Map<RANK, Integer> getRankCounts(){
         return rankCounts;
     };
 
-    public static LottoStatus of(List<Lotto> userLotto, WinningLotto winningLotto, int purchaseMoney) {
+    public static LottoStatus of(List<Lotto> userLotto, WinningLotto winningLotto, Money money) {
         Map<RANK, Integer> rankCounts = new EnumMap<>(RANK.class);
         for (RANK rank : RANK.values()) {
             rankCounts.put(rank, 0);
@@ -29,7 +29,7 @@ public class LottoStatus {
             rankCounts.put(rank, rankCounts.get(rank) + 1);
         }
 
-        return new LottoStatus(rankCounts, purchaseMoney);
+        return new LottoStatus(rankCounts, money);
     }
 
     public long getTotalPrize(){
@@ -47,7 +47,7 @@ public class LottoStatus {
 
     public double getRateOfPrize(){
         long totalPrize = getTotalPrize();
-
+        int purchaseMoney = money.getAmount();
         if (purchaseMoney == 0){
             return 0.0;
         }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lotto.domain.Lotto;
 import lotto.domain.LottoStatus;
+import lotto.domain.Money;
 import lotto.domain.RANK;
 import lotto.domain.WinningLotto;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +32,7 @@ public class LottoStatusTest {
 
         winningLotto = new WinningLotto(1, List.of(1,2,3,4,5,6), 7);
 
-        lottoStatus = LottoStatus.of(userLotto, winningLotto, 8000);
+        lottoStatus = LottoStatus.of(userLotto, winningLotto, Money.fromTicketCount(userLotto.size()));
     }
 
     @Test

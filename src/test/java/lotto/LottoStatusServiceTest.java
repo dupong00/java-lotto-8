@@ -18,28 +18,28 @@ import org.junit.jupiter.api.Test;
 public class LottoStatusServiceTest {
     private LottoStatusService lottoStatusService;
 
-    private LottoRepository lottoRepository;
-    private WinningLottoRepository winningLottoRepository;
-
     @BeforeEach
     void setUp() {
-        lottoRepository = new InMemoryLottoRepository();
-        winningLottoRepository = new InMemoryWinningLottoRepository();
+        LottoRepository lottoRepository = new InMemoryLottoRepository();
+        WinningLottoRepository winningLottoRepository = new InMemoryWinningLottoRepository();
 
         lottoStatusService = new LottoStatusService(lottoRepository, winningLottoRepository);
 
-        Lotto lottoToSave = new Lotto(List.of(1,2,3,10,11,12));
-        WinningLotto winningLottoToSave = new WinningLotto(1, List.of(1,2,3,4,5,6),7);
+        Lotto winningTicket = new Lotto(List.of(1, 2, 3, 10, 11, 12));
+        lottoRepository.save(winningTicket);
 
-        lottoRepository.save(lottoToSave);
+        Lotto losingTicket = new Lotto(List.of(40, 41, 42, 43, 44, 45));
+        for (int i = 0; i < 7; i++) {
+            lottoRepository.save(losingTicket);
+        }
+
+        WinningLotto winningLottoToSave = new WinningLotto(1, List.of(1,2,3,4,5,6),7);
         winningLottoRepository.save(winningLottoToSave);
     }
 
     @Test
     void 통계_계산_성공(){
-        int purchaseMoney = 8000;
-
-        LottoStatus resultStatus = lottoStatusService.calculateStatus(purchaseMoney);
+        LottoStatus resultStatus = lottoStatusService.calculateStatus();
 
         assertThat(resultStatus.getTotalPrize()).isEqualTo(5000);
         assertThat(resultStatus.getRateOfPrize()).isEqualTo(62.5);

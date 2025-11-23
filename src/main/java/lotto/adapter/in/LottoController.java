@@ -8,6 +8,7 @@ import lotto.application.port.in.WinningLottoUseCase;
 import lotto.domain.ErrorMessage;
 import lotto.domain.Lotto;
 import lotto.domain.LottoStatus;
+import lotto.domain.Money;
 import lotto.domain.WinningLotto;
 
 public class LottoController {
@@ -44,28 +45,31 @@ public class LottoController {
 
         setUpWinningLotto();
 
-        showStatus(purchaseMoney);
+        showStatus();
     }
 
     private int getValidPurchaseMoney() {
         while (true) {
             try {
                 String moneyInput = inputView.readPurchaseMoney();
-                return inputMapper.parseIntMoney(moneyInput);
+                int amount = inputMapper.parseIntMoney(moneyInput);
+                new Money(amount);
+                return amount;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
     }
 
-    private int getValidManualCount(int money) {
+    private int getValidManualCount(int amount) {
         while (true) {
             try {
                 String manualCountInput = inputView.readManualCount();
                 int count = inputMapper.parseIntManualCount(manualCountInput);
-                if (money / 1000 >= count) {
-                    return count;
-                }
+
+                new Money(amount).spend(count);
+
+                return count;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
@@ -179,8 +183,8 @@ public class LottoController {
     }
 
 
-private void showStatus(int purchaseMoney) {
-        LottoStatus status = lottoStatusUseCase.calculateStatus(purchaseMoney);
+private void showStatus() {
+        LottoStatus status = lottoStatusUseCase.calculateStatus();
 
         outputView.printStatus(status);
     }

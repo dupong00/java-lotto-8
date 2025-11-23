@@ -10,7 +10,14 @@ public class Money {
         this.amount = amount;
     }
 
+    public int getAmount() {
+        return amount;
+    }
+
     private void validate(int amount) {
+        if (amount == 0){
+            return;
+        }
         if (amount < LOTTO_PRICE) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_NOT_MIN_ORDER.getMessage());
         }
@@ -32,5 +39,9 @@ public class Money {
 
     public int calculateTicketCount() {
         return this.amount / LOTTO_PRICE;
+    }
+
+    public static Money fromTicketCount(int ticketCount) {
+        return new Money(ticketCount * LOTTO_PRICE);
     }
 }

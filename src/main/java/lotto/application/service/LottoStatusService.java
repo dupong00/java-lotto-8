@@ -5,6 +5,7 @@ import lotto.application.port.out.LottoRepository;
 import lotto.application.port.out.WinningLottoRepository;
 import lotto.domain.Lotto;
 import lotto.domain.LottoStatus;
+import lotto.domain.Money;
 import lotto.domain.WinningLotto;
 import java.util.List;
 
@@ -19,10 +20,11 @@ public class LottoStatusService implements LottoStatusUseCase {
     }
 
     @Override
-    public LottoStatus calculateStatus(int purchaseMoney){
+    public LottoStatus calculateStatus(){
         List<Lotto> userLottos = lottoRepository.findAll();
         WinningLotto winningLotto = winningLottoRepository.find();
 
-        return LottoStatus.of(userLottos, winningLotto, purchaseMoney);
+        Money totalSpent = Money.fromTicketCount(userLottos.size());
+        return LottoStatus.of(userLottos, winningLotto, totalSpent);
     }
 }
